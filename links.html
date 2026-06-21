@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AffordAut0 — Links</title>
+<meta name="description" content="Find out exactly what you need to earn to afford any car. Calculator, social media and more.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --accent: #e84c1e;
+  --accent-dark: #c03c14;
+  --black: #0d0d0d;
+  --white: #ffffff;
+  --surface: #161616;
+  --border: rgba(255,255,255,0.08);
+  --text: #ffffff;
+  --text-muted: rgba(255,255,255,0.5);
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  font-family: var(--font);
+  background: var(--black);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px 60px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background glow */
+body::before {
+  content: '';
+  position: fixed;
+  top: -200px; left: 50%;
+  transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(232,76,30,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  z-index: 1;
+}
+
+/* LOGO */
+.logo-wrap {
+  text-align: center;
+  margin-bottom: 8px;
+}
+.logo {
+  font-size: 32px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--white);
+}
+.logo span { color: var(--accent); }
+
+.tagline {
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+
+/* STAT PILLS */
+.stat-row {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+.stat-pill span { color: var(--accent); }
+
+/* LINKS */
+.links { display: flex; flex-direction: column; gap: 12px; }
+
+.link-btn {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 14px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 15px;
+  transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.link-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+}
+.link-btn:active { transform: scale(0.98); }
+
+/* Primary — calculator */
+.link-btn.primary {
+  background: var(--accent);
+  color: var(--white);
+  border-color: var(--accent);
+}
+.link-btn.primary::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+}
+.link-btn.primary:hover { background: var(--accent-dark); border-color: var(--accent-dark); }
+
+/* Standard dark */
+.link-btn.dark {
+  background: var(--surface);
+  color: var(--white);
+  border-color: var(--border);
+}
+.link-btn.dark:hover { border-color: rgba(255,255,255,0.2); background: #1e1e1e; }
+
+/* TikTok */
+.link-btn.tiktok {
+  background: #010101;
+  color: var(--white);
+  border-color: rgba(255,255,255,0.1);
+}
+.link-btn.tiktok:hover { border-color: #69c9d0; }
+
+/* Instagram */
+.link-btn.instagram {
+  background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  color: var(--white);
+  border-color: transparent;
+}
+
+/* YouTube */
+.link-btn.youtube {
+  background: #1a1a1a;
+  color: var(--white);
+  border-color: rgba(255,0,0,0.25);
+}
+.link-btn.youtube:hover { border-color: #ff0000; }
+
+.link-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 20px;
+  background: rgba(255,255,255,0.1);
+  position: relative; z-index: 1;
+}
+.link-btn.primary .link-icon { background: rgba(255,255,255,0.2); }
+.link-btn.instagram .link-icon { background: rgba(255,255,255,0.15); }
+
+.link-text { flex: 1; position: relative; z-index: 1; }
+.link-title { font-size: 15px; font-weight: 700; line-height: 1.2; }
+.link-sub { font-size: 12px; font-weight: 400; opacity: 0.65; margin-top: 2px; }
+
+.link-arrow {
+  font-size: 18px;
+  opacity: 0.5;
+  position: relative; z-index: 1;
+  transition: transform 0.15s, opacity 0.15s;
+}
+.link-btn:hover .link-arrow { transform: translateX(3px); opacity: 0.9; }
+
+/* DIVIDER */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 8px 0 4px;
+}
+.divider-line {
+  flex: 1; height: 1px;
+  background: var(--border);
+}
+.divider-label {
+  font-size: 11px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 1px;
+  color: rgba(255,255,255,0.2);
+  white-space: nowrap;
+}
+
+/* FOOTER */
+.footer {
+  margin-top: 32px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255,255,255,0.2);
+  line-height: 1.7;
+}
+.footer a { color: rgba(255,255,255,0.3); text-decoration: none; }
+.footer a:hover { color: rgba(255,255,255,0.6); }
+
+/* Animated dot */
+.live-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  background: #2ecc71;
+  border-radius: 50%;
+  margin-right: 6px;
+  animation: blink 2s ease-in-out infinite;
+  vertical-align: middle;
+}
+@keyframes blink {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- LOGO -->
+  <div class="logo-wrap">
+    <div class="logo">affordaut<span>0</span></div>
+  </div>
+  <p class="tagline">Find out exactly what you need to earn<br>to afford any car — in 30 seconds.</p>
+
+  <!-- STATS -->
+  <div class="stat-row">
+    <div class="stat-pill"><span>144</span> cars</div>
+    <div class="stat-pill"><span>30 sec</span> not 45 min</div>
+    <div class="stat-pill"><span>Free</span> always</div>
+  </div>
+
+  <!-- LINKS -->
+  <div class="links">
+
+    <!-- Calculator — primary CTA -->
+    <a href="https://affordaut0.com" class="link-btn primary" target="_blank">
+      <div class="link-icon">🚗</div>
+      <div class="link-text">
+        <div class="link-title">Try the Calculator</div>
+        <div class="link-sub"><span class="live-dot"></span>affordaut0.com — live now</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-label">Follow along</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- TikTok -->
+    <a href="https://tiktok.com/@affordaut0" class="link-btn tiktok" target="_blank">
+      <div class="link-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.77 1.52V6.75a4.85 4.85 0 01-1-.06z"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">TikTok</div>
+        <div class="link-sub">@affordaut0</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <!-- Instagram -->
+    <a href="https://instagram.com/affordaut0" class="link-btn instagram" target="_blank">
+      <div class="link-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">Instagram</div>
+        <div class="link-sub">@affordaut0</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <!-- YouTube -->
+    <a href="https://youtube.com/@affordaut0" class="link-btn youtube" target="_blank">
+      <div class="link-icon">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+          <path d="M23.495 6.205a3.007 3.007 0 00-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 00.527 6.205a31.247 31.247 0 00-.522 5.805 31.247 31.247 0 00.522 5.783 3.007 3.007 0 002.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 002.088-2.088 31.247 31.247 0 00.5-5.783 31.247 31.247 0 00-.5-5.805zM9.609 15.601V8.408l6.264 3.602z"/>
+        </svg>
+      </div>
+      <div class="link-text">
+        <div class="link-title">YouTube</div>
+        <div class="link-sub">@affordaut0 · Shorts & full videos</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <div class="divider-label">More</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- Car Directory -->
+    <a href="https://affordaut0.com/#directorySection" class="link-btn dark" target="_blank">
+      <div class="link-icon">🔍</div>
+      <div class="link-text">
+        <div class="link-title">Browse All 144 Cars</div>
+        <div class="link-sub">Search, filter and compare every car</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+    <!-- Affordability Profile -->
+    <a href="https://affordaut0.com/#profileSection" class="link-btn dark" target="_blank">
+      <div class="link-icon">💰</div>
+      <div class="link-text">
+        <div class="link-title">What Can I Afford?</div>
+        <div class="link-sub">Enter your income → see every car ranked</div>
+      </div>
+      <div class="link-arrow">→</div>
+    </a>
+
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    affordaut0.com<br>
+    All figures are estimates only. Not financial advice.<br>
+    <a href="https://affordaut0.com">© AffordAut0 2025</a>
+  </div>
+
+</div>
+
+</body>
+</html>
